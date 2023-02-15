@@ -11,7 +11,7 @@ function ProjectForm({ handleSubmit, btnText, projectData }) {
     const [ project, setProject ] = useState(projectData || {})
 
         useEffect(() => {
-            fetch("http://localhost:5000/categories", {
+            fetch('http://localhost:5000/categories', {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json'
@@ -34,7 +34,7 @@ function ProjectForm({ handleSubmit, btnText, projectData }) {
         function handleCategory(e) {
             setProject({ ...project, category: {
                 id: e.target.value,
-                name: e.target.options[e.target.selectedIndex],
+                name: e.target.options[e.target.selectedIndex].text,
             },
         })
         }

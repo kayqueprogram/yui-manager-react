@@ -1,25 +1,37 @@
 {
-    "projects": [],
-    "categories": [
-        {
-            "id": 1,
-            "name": "Infra"
-        },
-        {
-            "id": 2,
-            "name": "Desenvolvimento"
-        },
-        {
-            "id": 3,
-            "name": "Design"
-        },
-        {
-            "id": 4,
-            "name":"Planejamento"
-        },
-        {
-            "id": 5,
-            "name": "Tecnologia e Inovação"
-        }
-    ]
+  "projects": [
+    {
+      "name": "Teste de projeto",
+      "budget": "300",
+      "category": {
+        "id": "1",
+        "name": "Infra"
+      },
+      "yui": 0,
+      "services": [],
+      "id": 1
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "Infra"
+    },
+    {
+      "id": 2,
+      "name": "Desenvolvimento"
+    },
+    {
+      "id": 3,
+      "name": "Design"
+    },
+    {
+      "id": 4,
+      "name": "Planejamento"
+    },
+    {
+      "id": 5,
+      "name": "Tecnologia e Inovação"
+    }
+  ]
 }

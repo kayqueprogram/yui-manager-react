@@ -1,15 +1,15 @@
 {
   "projects": [
     {
-      "name": "Teste de projeto",
-      "budget": "300",
+      "name": "Yui-manager",
+      "budget": "650",
       "category": {
-        "id": "1",
-        "name": "Infra"
+        "id": "5",
+        "name": "Tecnologia e Inovação"
       },
       "yui": 0,
       "services": [],
-      "id": 1
+      "id": 2
     }
   ],
   "categories": [

@@ -10,6 +10,17 @@
       "yui": 0,
       "services": [],
       "id": 2
+    },
+    {
+      "name": "Teste de projeto ",
+      "budget": "789",
+      "category": {
+        "id": "1",
+        "name": "Infra"
+      },
+      "yui": 0,
+      "services": [],
+      "id": 3
     }
   ],
   "categories": [

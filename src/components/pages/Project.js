@@ -3,6 +3,9 @@ import Loading from '../layout/Loading';
 import Container from '../layout/Container';
 import Message from '../layout/Message';
 import ProjectForm from '../project/ProjectForm';
+import ServiceForm from '../services/ServiceForm';
+import ServiceCard from '../services/ServiceCard';
+import {parse, v4 as uuidv4} from 'uuid'
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
@@ -10,9 +13,10 @@ function Project() {
 
     const { id } = useParams()
     const [ project, setProject ] = useState([])
+    const [ services, setServices] = useState([])
     const [ showProjectForm, setShowProjectForm ] = useState(false)
     const [ showServiceForm, setShowServiceForm ] = useState(false)
-    const [message, setMessage ] = useState()
+    const [message, setMessage ] = useState('')
     const [ type, setType ] = useState()
  
     useEffect(() => {
@@ -24,6 +28,7 @@ function Project() {
             },
         }).then(resp => resp.json()).then((data) => {
             setProject(data)
+            setServices(data.services)
         }).catch(err => console.log(err))
 
     }, [id])
@@ -60,6 +65,64 @@ function Project() {
         setShowProjectForm(!showProjectForm)
     }
 
+    function createService(project) {
+        setMessage('')
+        const lastService = project.services[project.services.length - 1]
+
+        lastService.id = uuidv4()
+
+        const lastServiceYui = lastService.yui
+
+        const newYui = parseFloat(project.yui) + parseFloat(lastServiceYui)
+
+        if(newYui > parseFloat(project.budget)) {
+            setMessage('Orçamento ultrapassado, verifique o valor do serviço')
+            setType('error')
+            project.services.pop()
+            return false
+        }
+
+        project.yui = newYui
+
+        fetch(`http://localhost:5000/projects/${project.id}`, {
+            method: "PATCH",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(project)
+        }).then((resp) => resp.json()).then((data) => {
+            setShowServiceForm(false)
+        }).catch(err => console.log(err))
+    }
+
+    function removeService(id, yui) {
+        const servicesUpdate = project.services.filter(
+            (service) => service.id !== id
+        )
+
+        const projectUpdated =  project
+
+        projectUpdated.services = servicesUpdate
+
+        projectUpdated.yui = parseFloat(projectUpdated.yui) - parseFloat(yui)
+
+        fetch(`http://localhost:5000/projects/${projectUpdated.id}`, {
+            method: "PATCH",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(projectUpdated)
+        }).then((resp) => resp.json()).then(
+            (data) => {
+                setProject(projectUpdated)
+                setServices(servicesUpdate)
+                setMessage('Serviço removido com sucesso!')
+                setType('sucess')
+            }
+        ).catch(err => console.log(err))
+
+    }
+
     return (
         <>
             {project.name ? (
@@ -94,7 +157,19 @@ function Project() {
                              <button className={styles.btn} onClick={toggleServiceForm}>
                                 {!showServiceForm ? 'Adicionar serviço' : 'Fechar'}
                             </button>
+                        <div className={styles.form}>
+                            {showServiceForm && <ServiceForm handleSubmit={createService} btnText="Adicionar serviço" projectData={project}/>}
                         </div>
+                        </div>
+                        
+                        <h2>Serviços</h2>
+                        <Container customClass="start">
+                            {services.length > 0 && 
+                            services.map((service) => (
+                                <ServiceCard  id={service.id} name={service.name} yui={service.yui} description={service.description} key={service.id} handleRemove={removeService} />                
+                            ))}
+                            {services.length === 0 && <p>Não há serviços cadastrados.</p>}
+                        </Container>
                     </Container>
                 </div>
             ): (

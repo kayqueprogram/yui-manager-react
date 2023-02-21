@@ -7,8 +7,21 @@
         "id": "5",
         "name": "Tecnologia e Inovação"
       },
-      "yui": 0,
-      "services": [],
+      "yui": 430,
+      "services": [
+        {
+          "name": "Service one",
+          "yui": "150",
+          "description": "Administra as finanças do usuário",
+          "id": "c524f776-52d2-41e1-b520-b7e4bbd2a9e6"
+        },
+        {
+          "name": "Service two",
+          "yui": "280",
+          "description": "Cuida da parte jurídica",
+          "id": "3e642ebf-b0fa-427e-a8e2-4387aefb8240"
+        }
+      ],
       "id": 2
     },
     {
@@ -21,6 +34,17 @@
       "yui": 0,
       "services": [],
       "id": 3
+    },
+    {
+      "name": "Database",
+      "budget": "560",
+      "category": {
+        "id": "2",
+        "name": "Desenvolvimento"
+      },
+      "yui": 0,
+      "services": [],
+      "id": 4
     }
   ],
   "categories": [
